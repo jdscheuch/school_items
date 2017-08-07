@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta charset="UTF-8">
+			<title>jQuery Mobile Web App</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+			<link href="styles/custom.css" rel="stylesheet" type="text/css">
+			<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+				<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+				<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+				<script src="http://ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.2.5.min.js"></script>
+
+	</head>
+
+	<body>
+
+		<div id="page" data-role="page" data-theme="a" data-add-back-btn="true">
+			<div data-role="header" data-theme="a" data-add-back-btn="true">
+	  		<div class="logo"><p style="text-align:center"/><img src="images/main-page1.jpg" width="220" height="110" alt=""/></div>
+			</div>
+
+  		<div data-role="content">
+				<div data-role="header" data-theme="a" data-add-back-btn="true">
+					<h1>VISITORS LOG</h1>
+						Please Enter Your Information Below
+					</p>
+						<textarea class="localstorage" placeholder="Please Enter Your Name Here."autofocus></textarea>
+						<textarea class="localstorage" placeholder="Please Enter Where You Are From(City, State)."autofocus></textarea>
+						<textarea class="localstorage" placeholder="Please Enter Your Favorite Camping Location."autofocus></textarea>
+						<textarea class="localstorage" placeholder="Please Enter Your Favorite Camping Meal."autofocus></textarea>
+						<textarea class="localstorage" placeholder="Do You Like The Web Site? (Yes or No)."autofocus></textarea>
+						<button class="clear">Clear</button>
+						<button class="submit">Submit</button>
+					</div>
+  		</div>
+
+			<div data-role="footer" data-theme="a">
+				<div class="logo"><p style="text-align:center"/><img src="images/main-page2.jpg" width="220" height="110" alt=""/></p></div>
+				<h4>Scheuch Pages &copy; 2017</h4>
+			</div>
+
+		</div>
+
+	</body>
+
+</html>
+
+<script>
+
+(function(){
+
+	var rasm = document.querySelector(.'localstorage');
+
+	function supportsLocalSotrage(){
+		return typeof(Storage)!=='undefined';
+	}
+
+	if(!supportsLocalStorage()){
+		rasm.value='Your borwser does not support localStorage.';
+	}else{
+		try{
+			setInterval(function(){
+				localStorage.setItem('autosave',rasm.value);
+			}, 1000);
+		}catch(e){
+			if(e == QUOTA_EXCEEDED_ERR){
+				alert('Quota exceeded!');
+			}
+		}
+		if(localStorage.getItem('autosave')){
+			rasm.value=localStorage.getItem('autosave');
+		}
+		document.querySelector('.clear').onclick=function(){
+			rasm.value='';
+			localStorage.removeItem('autosave');
+		};
+		document.querySelector('.empty').onclick=function(){
+			rasm.value='';
+			localStorage.clear();
+		};
+	}
+
+})();
+</script>
